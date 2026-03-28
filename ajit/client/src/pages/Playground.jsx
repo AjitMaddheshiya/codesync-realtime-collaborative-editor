@@ -45,12 +45,9 @@ function Playground() {
 
   // ✅ Socket setup
   useEffect(() => {
-    const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+    const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'https://codesync-realtime-collaborative-editor.onrender.com';
 
-    if (!BACKEND_URL) {
-      console.error("Backend URL missing");
-      return;
-    }
+    console.log('Using backend:', BACKEND_URL);
 
     const newSocket = io(BACKEND_URL);
 
@@ -65,7 +62,8 @@ function Playground() {
   // ✅ API Calls
   const getRoomContent = async () => {
     try {
-      const res = await Axios.get(`${import.meta.env.VITE_BACKEND_URL}/get-room-content`, {
+      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'https://codesync-realtime-collaborative-editor.onrender.com';
+      const res = await Axios.get(`${BACKEND_URL}/get-room-content`, {
         params: { roomName: id }
       });
       setText(res.data.content || '');
@@ -76,7 +74,8 @@ function Playground() {
 
   const getRoomUsers = async () => {
     try {
-      const res = await Axios.get(`${import.meta.env.VITE_BACKEND_URL}/get-room-users`, {
+      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'https://codesync-realtime-collaborative-editor.onrender.com';
+      const res = await Axios.get(`${BACKEND_URL}/get-room-users`, {
         params: { roomName: id }
       });
       setUsers(res.data.users || []);

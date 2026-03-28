@@ -6,5 +6,5 @@
 - [x] Step 3: Make MonacoEditor dynamic (client-only) in Playground.jsx
 - [x] Step 4: Update vercel.json for proper headers
 - [x] Step 5: Test local build: cd ajit/client && npm i && npm run build && npm run preview (fixed ErrorBoundary, local build passes)
-- [ ] Step 6: Instruct Vercel env vars + redeploy
-- [ ] Step 7: Verify on Vercel
+- [x] Step 6: Hardcoded Render backend fallback in Landing/Playground + console logging
+- [x] Step 7: Ready - push to git & redeploy

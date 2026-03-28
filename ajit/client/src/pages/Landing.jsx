@@ -48,7 +48,8 @@ const Landing = () => {
     
     setIsLoading(true);
     try {
-const response = await Axios.post(`${import.meta.env.VITE_BACKEND_URL}/create-room`, {
+      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'https://codesync-realtime-collaborative-editor.onrender.com';
+      const response = await Axios.post(`${BACKEND_URL}/create-room`, {
         userName: userName.trim()
       });
       const newRoomId = response.data.roomName;
