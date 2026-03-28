@@ -1,0 +1,44 @@
+import React from 'react';
+
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error('React ErrorBoundary caught error:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{padding: '20px', color: 'red'}}>
+          <h2>Something went wrong.</h2>
+          <button onClick={() => this.setState({ hasError: false, error: null })}>
+            Try again
+          </button>
+          <details style={{whiteSpace: 'pre-wrap'}}>
+            {this.state.error && this.state.error.toString()}
+          </details>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+export default ErrorBoundary;
+</xai:function_call.
+
+
+
+
+
+<xai:function_call name="edit_file">
+<parameter name="path">c:/Users/user/Downloads/CODE-sync-main/ajit/client/src/App.jsx

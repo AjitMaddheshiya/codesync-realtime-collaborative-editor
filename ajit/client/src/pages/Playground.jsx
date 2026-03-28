@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import { io } from 'socket.io-client';
-import Editor from "@monaco-editor/react";
+// Dynamic import for client-side only to prevent hydration issues
+const Editor = React.lazy(() => import("@monaco-editor/react"));
 import { useParams, useLocation } from 'react-router-dom';
 import Axios from "axios";
 import { toast } from 'sonner';
@@ -161,6 +162,7 @@ function Playground() {
 
         {/* Editor */}
         <div className={`flex-1 ${showChat ? 'w-2/3' : 'w-full'}`}>
+        <React.Suspense fallback={<div className="h-full flex items-center justify-center bg-gray-900 text-white">Loading editor...</div>}>
           <Editor
             height="100%"
             theme={selectedTheme}
@@ -168,6 +170,7 @@ function Playground() {
             value={text}
             onChange={handleTextChange}
           />
+        </React.Suspense>
         </div>
 
         {/* Chat */}
