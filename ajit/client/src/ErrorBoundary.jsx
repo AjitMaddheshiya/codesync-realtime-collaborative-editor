@@ -34,11 +34,3 @@ class ErrorBoundary extends React.Component {
 }
 
 export default ErrorBoundary;
-</xai:function_call.
-
-
-
-
-
-<xai:function_call name="edit_file">
-<parameter name="path">c:/Users/user/Downloads/CODE-sync-main/ajit/client/src/App.jsx

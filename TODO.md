@@ -5,6 +5,6 @@
 - [x] Step 2: Add ErrorBoundary and logging to App.jsx
 - [x] Step 3: Make MonacoEditor dynamic (client-only) in Playground.jsx
 - [x] Step 4: Update vercel.json for proper headers
-- [x] Step 5: Test local build: cd ajit/client && npm i && npm run build && npm run preview
+- [x] Step 5: Test local build: cd ajit/client && npm i && npm run build && npm run preview (fixed ErrorBoundary, local build passes)
 - [ ] Step 6: Instruct Vercel env vars + redeploy
 - [ ] Step 7: Verify on Vercel
