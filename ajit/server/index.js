@@ -17,7 +17,7 @@ const io = socketIo(server, {
 // In-memory rooms storage (no MongoDB)
 const rooms = new Map();
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 5000;
 
 // Create room endpoint - in-memory
 app.post('/create-room', async (req, res) => {
@@ -218,6 +218,6 @@ socket.on('disconnect', async () => {
 });
 });
 
-server.listen(PORT, () => {
+app.get("/", (req, res) => {\n  res.send(\"CodeSync Backend 🚀\\nReady for real-time collaboration!\");\n});\n\nserver.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

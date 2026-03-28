@@ -48,7 +48,7 @@ const Landing = () => {
     
     setIsLoading(true);
     try {
-      const response = await Axios.post('http://localhost:4000/create-room', {
+const response = await Axios.post(`${import.meta.env.VITE_BACKEND_URL}/create-room`, {
         userName: userName.trim()
       });
       const newRoomId = response.data.roomName;

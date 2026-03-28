@@ -1,49 +1,43 @@
-# CodeSync Run & Deploy Plan
+# CodeSync Deployment Plan ✅
 
-## Current Status
-✅ Backend: Express + Socket.IO (port 4000, in-memory rooms)
-✅ Frontend: React + Vite (port 5173)
-✅ Features: Real-time collab coding + chat + users list
-
-## Local Run Commands
+## Local Development
 ```
-# Terminal 1 - Server
+# Server
 cd ajit/server
-npm install
-npm start
-# or node index.js
-```
+node index.js  # port 4000
 
-```
-# Terminal 2 - Client  
+# Client  
 cd ajit/client
-npm install
-npm run dev
+npm run dev    # port 5173
 ```
-
 Visit http://localhost:5173
+
+## Production Deployment
+1. **Backend (Render.com)**
+```
+git push origin main  # triggers auto-deploy
+```
+✅ Backend: https://codesync-realtime-collaborative-editor.onrender.com
+
+2. **Frontend (Vercel)**
+```
+cd ajit/client
+npm i -g vercel
+vercel --prod
+```
+✅ Set env: `VITE_BACKEND_URL=https://codesync-realtime-collaborative-editor.onrender.com`
+
+## Live URLs
+🌐 Frontend: [your-vercel-url.vercel.app]
+🔌 Backend: https://codesync-realtime-collaborative-editor.onrender.com
 
 ## GitHub Push
 ```
 git init
 git add .
-git commit -m "CodeSync: Real-time collaborative code editor"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/CODE-sync-main.git
+git commit -m \"CodeSync: Production ready\"
+git branch -M main  
+git remote add origin YOUR_GITHUB_REPO
 git push -u origin main
 ```
-
-## Vercel Deploy (Frontend only)
-1. Backend → Render/Heroku (Socket.IO needs server)
-2. Frontend → Vercel:
-   ```
-   cd ajit/client
-   vercel --prod
-   ```
-   Set env: `VITE_API_URL=https://your-backend.onrender.com`
-
-## Next Steps
-- [ ] Add README with screenshots/GIF
-- [ ] GitHub Actions CI
-- [ ] Deploy backend
 
