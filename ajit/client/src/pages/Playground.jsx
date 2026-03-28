@@ -29,7 +29,7 @@ const THEMES = [
 function Playground() {
   const { id } = useParams();
   const location = useLocation();
-  const userName = location.state?.userName || 'Anonymous';
+  const userName = location?.state?.userName || 'Anonymous';
 
   const [socket, setSocket] = useState(null);
   const [text, setText] = useState('');
@@ -40,8 +40,6 @@ function Playground() {
   const [showChat, setShowChat] = useState(false);
   const [chatMessages, setChatMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
-  const [showSettings, setShowSettings] = useState(false);
-  const [isTyping, setIsTyping] = useState(false);
   const [typingUsers, setTypingUsers] = useState([]);
 
   // ✅ Socket setup
@@ -55,13 +53,8 @@ function Playground() {
 
     const newSocket = io(BACKEND_URL);
 
-    newSocket.on('connect', () => {
-      setIsConnected(true);
-    });
-
-    newSocket.on('disconnect', () => {
-      setIsConnected(false);
-    });
+    newSocket.on('connect', () => setIsConnected(true));
+    newSocket.on('disconnect', () => setIsConnected(false));
 
     setSocket(newSocket);
 
@@ -89,7 +82,7 @@ function Playground() {
     } catch {}
   };
 
-  // ✅ Socket listeners
+  // ✅ Socket listeners (SAFE)
   useEffect(() => {
     if (!socket) return;
 
@@ -98,8 +91,13 @@ function Playground() {
 
     socket.emit('joinRoom', id, userName);
 
-    socket.on('textUpdated', setText);
-    socket.on('usersList', setUsers);
+    socket.on('textUpdated', (data) => {
+      setText(data);
+    });
+
+    socket.on('usersList', (data) => {
+      setUsers(data || []);
+    });
 
     socket.on('chatMessage', (msg) => {
       setChatMessages(prev => [...prev, msg]);
@@ -112,14 +110,21 @@ function Playground() {
     });
 
     socket.on('userStoppedTyping', (data) => {
-      setTypingUsers(prev => prev.filter(u => u.userName !== data.userName));
+      setTypingUsers(prev =>
+        prev.filter(u => u.userName !== data.userName)
+      );
     });
 
     return () => {
       socket.emit('leaveRoom', id);
-      socket.off();
+
+      socket.off('textUpdated');
+      socket.off('usersList');
+      socket.off('chatMessage');
+      socket.off('userTyping');
+      socket.off('userStoppedTyping');
     };
-  }, [socket, id]);
+  }, [socket, id, userName]);
 
   // ✅ Editor change
   const handleTextChange = (value) => {
@@ -127,7 +132,7 @@ function Playground() {
     socket?.emit('updateText', id, value);
   };
 
-  // ✅ Chat
+  // ✅ Chat send
   const sendMessage = () => {
     if (!newMessage.trim()) return;
 
@@ -170,7 +175,9 @@ function Playground() {
           <div className="w-1/3 bg-gray-800 text-white p-2 flex flex-col">
             <div className="flex-1 overflow-auto">
               {chatMessages.map(m => (
-                <div key={m.id}>{m.userName}: {m.text}</div>
+                <div key={m.id}>
+                  <strong>{m.userName}</strong>: {m.text}
+                </div>
               ))}
             </div>
 
