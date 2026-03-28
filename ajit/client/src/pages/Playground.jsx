@@ -5,7 +5,37 @@ import { useParams, useLocation } from 'react-router-dom';
 import Axios from "axios"
 import { toast } from 'sonner';
 
-const socket = io(import.meta.env.VITE_BACKEND_URL);
+import { useEffect, useState } from "react";
+import { io } from "socket.io-client";
+
+function Playground() {
+  const [socket, setSocket] = useState(null);
+
+  useEffect(() => {
+    const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
+    if (!BACKEND_URL) {
+      console.error("Backend URL missing");
+      return;
+    }
+
+    const newSocket = io(BACKEND_URL);
+
+    setSocket(newSocket);
+
+    return () => {
+      newSocket.disconnect();
+    };
+  }, []);
+
+  return (
+    <div>
+      {/* your existing UI */}
+    </div>
+  );
+}
+
+export default Playground;
 
 const LANGUAGES = [
   { id: 'javascript', name: 'JavaScript', icon: '⚡' },
@@ -448,4 +478,4 @@ const res = await Axios.get(`${import.meta.env.VITE_BACKEND_URL}/get-room-users`
   );
 }
 
-export default Playground;
+
