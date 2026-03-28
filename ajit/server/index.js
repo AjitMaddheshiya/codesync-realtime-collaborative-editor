@@ -218,6 +218,10 @@ socket.on('disconnect', async () => {
 });
 });
 
-app.get("/", (req, res) => {\n  res.send(\"CodeSync Backend 🚀\\nReady for real-time collaboration!\");\n});\n\nserver.listen(PORT, () => {
+app.get("/", (req, res) => {
+  res.send("CodeSync Backend 🚀 Ready for real-time collaboration!");
+});
+
+server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
